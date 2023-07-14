@@ -18,10 +18,9 @@
   },
   "homepage": "https://github.com/HAND-ME-DIAMONDS-LLC/File-Renaming#readme",
   "dependencies": {
-    "@ngrok/ngrok": "^0.5.2",
-    "@shopify/koa-shopify-auth": "^5.0.3",
     "@shopify/shopify-api": "^7.5.0",
     "express": "^4.18.2",
+    "fs": "^0.0.1-security",
     "shopify-api-node": "^3.12.5",
     "shopify-node-api": "^1.11.1"
   }

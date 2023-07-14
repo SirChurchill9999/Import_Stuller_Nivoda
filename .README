@@ -1,0 +1,28 @@
+/**
+ * Retrieves all the items from the database table 'products'
+ * and returns them as an array of objects.
+ */
+ 
+// FILEPATH: /Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/testingShopifyApp.js
+/**
+ * This file contains the code for testing the Shopify app.
+ * It includes functions for creating and updating products,
+ * as well as retrieving all products from the database.
+ * The app uses the Shopify API to interact with the store.
+ */
+
+FILEPATH: /Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/initializeShopifyApp.js
+
+npm outdated will identify packages that should be updated, and npm update <package name> can be used to update each package. But prior to npm@5.0.0,
+npm update <package name> will not update the versions in your package.json which is an issue.
+
+The best workflow is to:
+1. Identify out of date packages with npm outdated
+2. Update the versions in your package.json
+3. Run npm update to install the latest versions of each package
+Check out npm-check-updates to help with this workflow.
+
+Install npm-check-updates with npm i npm-check-updates -g
+Run npm-check-updates to list what packages are out of date (basically the same thing as running npm outdated)
+Run npm-check-updates -u to update all the versions in your package.json (this is the magic sauce)
+Run npm update as usual to install the new versions of your packages based on the updated package.json
