@@ -14,7 +14,7 @@ const myLoggingFunction = (severity, message) => {
   }
 };
 
-const Shopify = new shopifyApi({
+const shopify = new shopifyApi({
   apiSecretKey: SHOPIFY_API_SECRET_KEY,
   apiVersion: ApiVersion.April23,
   isCustomStoreApp: true,
@@ -27,13 +27,18 @@ const Shopify = new shopifyApi({
   restResources
 });
 
+const session = shopify.session.customAppSession("hand-me-diamonds-staging.myshopify.com");
+console.log(
+  `Session successfully initialized.`
+);
+
 async function getProductCustomerOrderCounts() {
   try {
-    const session = Shopify.session.customAppSession("hand-me-diamonds-staging.myshopify.com");
+    // const session = Shopify.session.customAppSession("hand-me-diamonds-staging.myshopify.com");
 
-    const { count: productCount } = await Shopify.rest.Product.count({ session });
-    const { count: customerCount } = await Shopify.rest.Customer.count({ session });
-    const { count: orderCount } = await Shopify.rest.Order.count({ session });
+    const { count: productCount } = await shopify.rest.Product.count({ session });
+    const { count: customerCount } = await shopify.rest.Customer.count({ session });
+    const { count: orderCount } = await shopify.rest.Order.count({ session });
 
     console.log(
       `There are ${productCount} products, ${customerCount} customers, and ${orderCount} orders in the ${session.shop} store.`
@@ -48,3 +53,6 @@ async function getProductCustomerOrderCounts() {
 }
 
 getProductCustomerOrderCounts();
+
+export { shopify };
+export { session};
