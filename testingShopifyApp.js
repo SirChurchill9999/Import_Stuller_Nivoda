@@ -12,7 +12,7 @@ var Shopify = new shopifyApi({
   isEmbeddedApp: false,
   hostName: "hand-me-diamonds-staging.myshopify.com",
   // Mount REST resources.
-  restResources,
+  restResources
 
   /*
   shop: 'hand-me-diamonds-staging.myshopify.com', // MYSHOP.myshopify.com
@@ -22,10 +22,10 @@ var Shopify = new shopifyApi({
 
 });
 
-Shopify.get('/admin/products.json', function(err, data, headers){
-  console.log(data); // Data contains product json information
-  console.log(headers); // Headers returned from request
-});
+// Shopify.get('/admin/products.json', function(err, data, headers){
+//   console.log(data); // Data contains product json information
+//   console.log(headers); // Headers returned from request
+// });
 
 const session = Shopify.session.customAppSession("hand-me-diamonds-staging.myshopify.com");
 
