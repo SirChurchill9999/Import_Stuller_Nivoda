@@ -63,28 +63,30 @@ import "@shopify/shopify-api/adapters/node";
 const client = new shopify.clients.Rest({session});
 
 const getAllProducts = async () => {
-  try {
-    let allProducts = [];
-    let nextLink = 'products.json?limit=250';
-    while (nextLink) {
-      const products = await client.get({
-        path: nextLink,
-        query: {
-          fields: 'id,title,vendor,product_type,handle,tags,variants,images',
-        },
-      });
-      allProducts = allProducts.concat(products);
-      const headerLink = products.headers.get('link');
-      if (!headerLink) {
-        break;
-      }
-      const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
-      nextLink = match ? match[1] : false;
+    try {
+        let allProducts = [];
+        let nextLink = 'https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-07/products.json';
+        while (nextLink) {
+            const products = await shopify.rest.Product.all({
+                session,
+                query: {
+                    limit: 250,
+                    fields: 'id,title,vendor,product_type,handle,tags,variants,images',
+                },
+            });
+            allProducts = allProducts.concat(products);
+            console.log(allProducts);
+            const headerLink = allProducts.headers.get('link');
+            if (!headerLink) {
+                break;
+            }
+            const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
+            nextLink = match ? match[1] : false;
+        }
+        console.log(allProducts);
+    } catch (error) {
+        console.error(error);
     }
-    console.log(allProducts);
-  } catch (error) {
-    console.error(error);
-  }
 };
-
+  
 getAllProducts();

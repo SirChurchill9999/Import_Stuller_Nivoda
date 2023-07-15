@@ -1,6 +1,6 @@
 import "@shopify/shopify-api/adapters/node";
 import { shopifyApi, ApiVersion, LogSeverity } from '@shopify/shopify-api';
-import {restResources} from '@shopify/shopify-api/rest/admin/2023-07'; // 2022-07
+import {restResources} from '@shopify/shopify-api/rest/admin/2023-04'; // 2022-07
 import { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_ACCESS_TOKEN } from './secrets.js';
 import { writeFileSync } from "fs";
 
@@ -56,3 +56,35 @@ getProductCustomerOrderCounts();
 
 export { shopify };
 export { session};
+
+const client = new shopify.clients.Rest({session});
+
+const getAllProducts = async () => {
+  try {
+    let allProducts = [];
+    let nextLink = 'https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-04/products.json';
+    while (nextLink) {
+        const products = await client.get({
+            path: 'products.json',
+            query: {
+              limit: 250,
+              fields: 'id,title,vendor,product_type,handle,tags,variants,images',
+            },
+          });          
+          console.log(products);
+
+        allProducts = allProducts.concat(products);
+      const headerLink = products.headers.get('link');
+      if (!headerLink) {
+        break;
+      }
+      const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
+      nextLink = match ? match[1] : false;
+    }
+    console.log(allProducts);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+getAllProducts();
