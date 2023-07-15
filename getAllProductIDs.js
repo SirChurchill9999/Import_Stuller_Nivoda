@@ -2,91 +2,54 @@
 import { shopify } from './testingShopifyApp.js';
 import { session } from './testingShopifyApp.js';
 import "@shopify/shopify-api/adapters/node";
-
-// const client = new shopify.clients.Rest({session});
-
-// const getAllProducts = async () => {
-//   try {
-//     let allProducts = [];
-//     let nextLink = 'products.json';
-//     while (nextLink) {
-//       const products = await client.get({
-//         path: nextLink,
-//         query: {
-//           fields: 'id,title,vendor,product_type,handle,tags,variants,images',
-//         },
-//       });
-//       allProducts = allProducts.concat(products);
-//       const headerLink = products.headers.get('link');
-//       const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
-//       nextLink = match ? match[1] : false;
-//     }
-//     console.log(allProducts);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
-// getAllProducts();
-
-
-
-// const client = new shopify.clients.Rest({session});
-// const getAllProducts = await client.get({
-//     path: 'products.json',
-//     query: {
-//         fields: 'id, title, vendor, product_type, handle, tags, variants, images',
-//     }
-// });
-// console.log(getAllProducts);
-
-// function makeRequest(nextLink = 'https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-04/products.json?limit=250'){
-//     return new Promise((resolve, reject) => {
-//       fetch(nextLink).then(r => {
-//         const headerLink = r.headers.get('Link');
-//         console.log(headerLink);
-//         const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
-//         const nextLink = match ? match[1] : false;
-//         if(nextLink){
-//           makeRequest(nextLink)
-//         } else {
-//           resolve();
-//         }
-//       })
-//     })
-//   }
-
-// makeRequest()
-
-
+import fs from 'fs';
+import path from 'path';
 
 const client = new shopify.clients.Rest({session});
 
-const getAllProducts = async () => {
-    try {
+function makeRequest(nextLink = 'https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-04/products.json'){
+    return new Promise((resolve, reject) => {
+      fetch(nextLink).then(async r => {
         let allProducts = [];
-        let nextLink = 'https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-07/products.json';
-        while (nextLink) {
-            const products = await shopify.rest.Product.all({
-                session,
-                query: {
-                    limit: 250,
-                    fields: 'id,title,vendor,product_type,handle,tags,variants,images',
-                },
-            });
-            allProducts = allProducts.concat(products);
-            console.log(allProducts);
-            const headerLink = allProducts.headers.get('link');
-            if (!headerLink) {
-                break;
-            }
-            const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
-            nextLink = match ? match[1] : false;
+        const products = await shopify.rest.Product.all({
+            session,
+            query: {
+                //limit: 50,
+                // fields: 'id,title,vendor,product_type,handle,tags,variants,images',
+            },
+        });
+        allProducts = allProducts.concat(products);
+
+        // USEFUL CODE FOR WRITING TO FILE
+
+        // const fileName = 'response.json';
+        // var __dirname = '/Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda';
+        // const filePath = path.join(__dirname, fileName);
+        // if (fs.existsSync(filePath)) {
+        //     const fileExt = path.extname(fileName);
+        //     const baseName = path.basename(fileName, fileExt);
+        //     const newFileName = `${baseName}_${Date.now()}${fileExt}`;
+        //     fs.writeFileSync(path.join(__dirname, newFileName), JSON.stringify(products));
+        //     console.log(`File ${newFileName} created`);
+        // } else {
+        //     fs.writeFileSync(filePath, JSON.stringify(products));
+        //     console.log(`File ${fileName} created`);
+        // }
+
+        // END USEFUL CODE FOR WRITING TO FILE
+
+        const headerLink = products.headers.Link[0]
+        const match = headerLink.match(/<[^;]+\/(\w+\.json[^;]+)>;\srel="next"/);
+        const nextLink = match ? `https://hand-me-diamonds-staging.myshopify.com/admin/api/2023-04/${match[1]}` : false;
+        if(nextLink){
+          makeRequest(nextLink)
+        } else {
+          resolve();
+          console.log(allProducts);
         }
-        console.log(allProducts);
-    } catch (error) {
-        console.error(error);
-    }
-};
-  
-getAllProducts();
+        
+      })
+    })
+  }
+makeRequest();
+export default makeRequest;

@@ -1,6 +1,6 @@
 import "@shopify/shopify-api/adapters/node";
 import { shopifyApi, ApiVersion, LogSeverity } from '@shopify/shopify-api';
-import {restResources} from '@shopify/shopify-api/rest/admin/2023-07'; // 2022-07
+import {restResources} from '@shopify/shopify-api/rest/admin/2023-04'; // 2022-07
 import { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_ACCESS_TOKEN } from './secrets.js';
 import { writeFileSync } from "fs";
 

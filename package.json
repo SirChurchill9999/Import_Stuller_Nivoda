@@ -23,5 +23,8 @@
     "fs": "^0.0.1-security",
     "shopify-api-node": "^3.12.5",
     "shopify-node-api": "^1.11.1"
+  },
+  "devDependencies": {
+    "fetch-mock": "^9.11.0"
   }
 }
