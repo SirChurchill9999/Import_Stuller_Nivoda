@@ -1,4 +1,7 @@
+// Importing the node-fetch library to make HTTP requests
 import fetch from 'node-fetch'; // using node-fetch in this example
+
+// Importing the NIVODA_STAGING_USERNAME and NIVODA_STAGING_PASSWORD from the secrets.js file
 import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../secrets.js';
 
 // You can call the GraphQL with all common request libraries such as:
@@ -7,15 +10,16 @@ let libraries = {
   axios: 'https://www.npmjs.com/package/axios'
 };
 
+// The API URL for the staging environment
 const API_URL = 'http://wdc-intg-customer-staging.herokuapp.com/api/diamonds';
-// the API_URL for production is https://integrations.nivoda.net/api/diamonds';
+
+// The API URL for the production environment
+// const API_URL = 'https://integrations.nivoda.net/api/diamonds';
 
 // Great documentation can be found here:
 // https://graphql.org/graphql-js/graphql-clients/
 
-// authentication query
-// for production, the username and password are the same as what you would use to login to the Nivoda platform
-// for staging, the username and password can be requested from tech @ nivoda dot net 
+// The authentication query to get the authentication token
 let authenticate_query = `{
     authenticate { 
         username_and_password(username: "${NIVODA_STAGING_USERNAME}", password: "${NIVODA_STAGING_PASSWORD}") {
@@ -25,7 +29,9 @@ let authenticate_query = `{
 }
 `;
 
+// An async function that makes the HTTP requests to the API
 (async function() {
+  // Making the authentication request to get the authentication token
   let authenticate_result = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -33,13 +39,12 @@ let authenticate_query = `{
     },
     body: JSON.stringify({ query: authenticate_query }),
   });
+
+  // Parsing the authentication result to get the authentication token
   let res = await authenticate_result.json();
-  
-  // the authentication token to get in future requests
   let { token } = res.data.authenticate.username_and_password;
 
-  // example diamond query
-  // note that this does not include all available fields, to see more fields please refer to the documentation
+  // The diamond query to get the diamonds from the API
   let diamond_query = `
     query {
       diamonds_by_query(
@@ -97,6 +102,7 @@ let authenticate_query = `{
     }
   `;
 
+  // Making the diamond request to get the diamonds from the API
   let result = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -106,22 +112,19 @@ let authenticate_query = `{
     body: JSON.stringify({ query: diamond_query }),
   });
 
+  // Parsing the diamond result to get the diamonds
   let diamond_res = await result.json();
   let { items, total_count } = diamond_res.data.diamonds_by_query;
 
+  // Logging the items and total count of diamonds
   console.log({ items, total_count });
   
-  // example to access a diamond is mapping over the items
-  // i.e. items[0].diamond.certificate.certNumber will give you the certificate number of the first item
-
-  // BEGIN: loop-over-items
+  // Looping over the items to access each diamond's certificate number
   for (let i = 0; i < items.length; i++) {
       const certNumber = items[i].diamond.certificate.certNumber;
       const video = items[i].diamond.video;
       const image = items[i].diamond.image;
       console.log(`Certificate number for item ${i}: ${certNumber}\n`);
   }
-  // END: loop-over-items
-
 
 })();
