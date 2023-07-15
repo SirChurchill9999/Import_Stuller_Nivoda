@@ -3,11 +3,12 @@
 import "@shopify/shopify-api/adapters/node";
 import {shopifyApi, ApiVersion, BillingInterval} from '@shopify/shopify-api';
 import {restResources} from '@shopify/shopify-api/rest/admin/2022-07';
+import { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_ACCESS_TOKEN } from './secrets.js';
 
 var Shopify = new shopifyApi({
   apiKey: 'd39567787cc8ffa48d498b40b2393477',
-  adminApiAccessToken: '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',
-  apiSecretKey: '9a2ff22ebe3e683c84188812127a2c5d',
+  adminApiAccessToken: SHOPIFY_API_ACCESS_TOKEN,
+  apiSecretKey: SHOPIFY_API_SECRET_KEY,
   scopes: ['read_products'],
   hostName: 'hand-me-diamonds-staging.myshopify.com',
   shop: 'hand-me-diamonds-staging',

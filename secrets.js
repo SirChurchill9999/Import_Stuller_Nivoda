@@ -21,3 +21,5 @@
 
 export const SHOPIFY_API_SECRET_KEY = "9a2ff22ebe3e683c84188812127a2c5d";
 export const SHOPIFY_API_ACCESS_TOKEN = "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";
+export const NIVODA_STAGING_USERNAME = "testaccount@sample.com";
+export const NIVODA_STAGING_PASSWORD = "staging-nivoda-22";
