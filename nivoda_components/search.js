@@ -125,6 +125,12 @@ let authenticate_query = `{
       const video = items[i].diamond.video;
       const image = items[i].diamond.image;
       console.log(`Certificate number for item ${i}: ${certNumber}\n`);
+      if (video !== null) {
+        console.log(`Video for item ${i}: ${video}\n`);
+      }
+      if (image !== null) {
+        console.log(`Image for item ${i}: ${image}\n`);
+      }
   }
 
 })();
