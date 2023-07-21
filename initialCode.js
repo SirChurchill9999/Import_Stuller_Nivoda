@@ -1,11 +1,12 @@
 import "@shopify/shopify-api/adapters/node";
 import {shopifyApi, ApiVersion, BillingInterval} from '@shopify/shopify-api';
 import {restResources} from '@shopify/shopify-api/rest/admin/2022-07';
+import { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_ACCESS_TOKEN, SHOP } from "./secrets.js";
 
 const shopify = shopifyApi.shopify;
 const session = shopifyApi.createCustomAppSession({
-    shop: 'hand-me-diamonds-staging.myshopify.com',
-    accessToken: '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',
+  shop: SHOP,
+  accessToken: SHOPIFY_API_ACCESS_TOKEN,
 });
 
 // Use REST resources to make calls.
