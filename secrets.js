@@ -24,3 +24,4 @@ export const SHOPIFY_API_ACCESS_TOKEN = "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"
 export const NIVODA_STAGING_USERNAME = "testaccount@sample.com";
 export const NIVODA_STAGING_PASSWORD = "staging-nivoda-22";
 export const SHOP = "hand-me-diamonds-staging.myshopify.com";
+export const API_KEY = "d39567787cc8ffa48d498b40b2393477";

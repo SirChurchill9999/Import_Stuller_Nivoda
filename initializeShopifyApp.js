@@ -6,17 +6,17 @@ import {restResources} from '@shopify/shopify-api/rest/admin/2022-07';
 import { SHOPIFY_API_SECRET_KEY, SHOPIFY_API_ACCESS_TOKEN } from './secrets.js';
 
 var Shopify = new shopifyApi({
-  apiKey: 'd39567787cc8ffa48d498b40b2393477',
+  apiKey: API_KEY,
   adminApiAccessToken: SHOPIFY_API_ACCESS_TOKEN,
   apiSecretKey: SHOPIFY_API_SECRET_KEY,
   scopes: ['read_products'],
-  hostName: 'hand-me-diamonds-staging.myshopify.com',
+  hostName: SHOP,
   shop: 'hand-me-diamonds-staging',
   hostScheme: 'https',
   apiVersion: ApiVersion.July22,
   isEmbeddedApp: false,
   isCustomStoreApp: true,
-  customShopDomains: ['*.hand-me-diamonds-staging.myshopify.com'],
+  customShopDomains: ['*.' & SHOP],
   restResources,
 });
 
