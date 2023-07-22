@@ -20,8 +20,8 @@
 // }
 
 export const SHOPIFY_API_SECRET_KEY = "9a2ff22ebe3e683c84188812127a2c5d";
-export const SHOPIFY_API_ACCESS_TOKEN = "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";
-export const STOREFRONT_API_ACCESS_TOKEN = "901e939497657211362ffc1d1542a586";
+export const SHOPIFY_API_ACCESS_TOKEN = "";
+export const STOREFRONT_API_ACCESS_TOKEN = "";
 export const NIVODA_STAGING_USERNAME = "testaccount@sample.com";
 export const NIVODA_STAGING_PASSWORD = "staging-nivoda-22";
 export const SHOP = "hand-me-diamonds-staging.myshopify.com";
