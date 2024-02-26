@@ -1,3 +1,6 @@
-[submodule "nivoda"]
+[submodule "/Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/nivoda"]
 	path = /Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/nivoda
+	url = https://github.com/Nivoda/nivoda-api.git
+[submodule "/Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/new"]
+	path = /Users/christopherkonicki/Documents/GitHub/Import_Stuller_Nivoda/new
 	url = https://github.com/Nivoda/nivoda-api.git
