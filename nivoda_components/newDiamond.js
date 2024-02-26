@@ -1,10 +1,17 @@
-/** 
- * This code is the current PRIORITY.
- * See below where further customization is required.
-*/
+/** Need to fix:
+ * require('dotenv').config();
+ * Gives error
+ * Commented out for now
+ */
 
+/**
+ * ULTIMATE GOAL:
+ * 1. Fetch diamond information from Nivoda
+ * 2. Create a new product in Shopify store <--- This is the part that needs to be added
+ * 3. Update the product with diamond information
+ */
 
-require('dotenv').config();
+//require('dotenv').config();
 
 // Importing the node-fetch library to make HTTP requests
 import fetch from 'node-fetch'; // using node-fetch in this example
@@ -37,12 +44,6 @@ let authenticate_query = `{
 }
 `;
 
-/**
- * NOTICE --------------------------------------------------------------
- * Further customization is required here.
- * NOTICE --------------------------------------------------------------
- */
-
 // An async function that makes the HTTP requests to the API
 (async function() {
   // Making the authentication request to get the authentication token
@@ -60,7 +61,6 @@ let authenticate_query = `{
 
   // The diamond query to get the diamonds from the API
   let diamond_query = `
-  /* */
     query {
       diamonds_by_query(
         query: {
@@ -118,7 +118,7 @@ let authenticate_query = `{
   `;
 
   // Making the diamond request to get the diamonds from the API
-  let result = await fetch(API_URL, {
+  let queryResult = await fetch(API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -128,8 +128,8 @@ let authenticate_query = `{
   });
 
   // Parsing the diamond result to get the diamonds
-  let diamond_res = await result.json();
-  let { items, total_count } = diamond_res.data.diamonds_by_query;
+  let diamondResult = await queryResult.json();
+  let { items, total_count } = diamondResult.data.diamonds_by_query;
 
   // Logging the items and total count of diamonds
   console.log({ items, total_count });
@@ -149,9 +149,3 @@ let authenticate_query = `{
   }
 
 })();
-
-/**
- * NOTICE --------------------------------------------------------------
- * END section where further customization is required.
- * NOTICE --------------------------------------------------------------
- */

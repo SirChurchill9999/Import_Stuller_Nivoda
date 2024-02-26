@@ -32,7 +32,13 @@ async function fetchDiamondInfo() {
   let { token } = authRes.data.authenticate.username_and_password;
 
   // Assuming the diamond query remains the same as in the initial snippet
-  let diamond_query = `query { /* Your diamond query here */ }`;
+  let diamond_query = `query { 
+    
+
+    /* Your diamond query here */ 
+
+
+  }`;
 
   let diamondResult = await fetch(NIVODA_API_URL, {
     method: 'POST',
@@ -50,7 +56,7 @@ async function fetchDiamondInfo() {
 
 // Function to create a new product in Shopify store
 async function createShopifyProduct(diamondInfo) {
-  const shopifyAPIURL = `https://${SHOP}/admin/api/2021-07/products.json`;
+  const shopifyAPIURL = `https://${SHOP}/admin/api/2021-07/products.json`; /* NOTE: Update the API version based on the Shopify store */
 
   let productData = {
     product: {
