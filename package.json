@@ -18,12 +18,12 @@
   },
   "homepage": "https://github.com/HAND-ME-DIAMONDS-LLC/File-Renaming#readme",
   "dependencies": {
-    "@shopify/shopify-api": "^7.5.0",
-    "axios": "^1.4.0",
+    "@shopify/shopify-api": "^9.3.2",
+    "axios": "^1.6.7",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
-    "shopify-api-node": "^3.12.5",
-    "shopify-node-api": "^1.11.1"
+    "shopify-api-node": "^3.13.1",
+    "shopify-node-api": "^1.5.2"
   },
   "devDependencies": {
     "fetch-mock": "^9.11.0"
