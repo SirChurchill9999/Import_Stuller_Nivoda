@@ -2,7 +2,8 @@
 import fetch from 'node-fetch'; // using node-fetch in this example
 
 // Importing the NIVODA_STAGING_USERNAME and NIVODA_STAGING_PASSWORD from the secrets.js file
-import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../secrets.js';
+import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../../secrets.js';
+import fs from 'fs'
 
 // You can call the GraphQL with all common request libraries such as:
 let libraries = {
@@ -57,7 +58,7 @@ let authenticate_query = `{
           color: [D]
         },
         offset: 0,
-        limit: 1, 
+        limit: 10, 
         order: { type: price, direction: ASC }
       ) {
         items {
@@ -102,36 +103,26 @@ let authenticate_query = `{
     }
   `;
 
-  // Making the diamond request to get the diamonds from the API
-  let result = await fetch(API_URL, {
+// Making the diamond request to get the diamonds from the API
+let result = await fetch(API_URL, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({ query: diamond_query }),
-  });
+});
 
-  // Parsing the diamond result to get the diamonds
-  let diamond_res = await result.json();
-  let logJSON = console.log(JSON.stringify(diamond_res, null, 2));
-  let { items, total_count } = diamond_res.data.diamonds_by_query;
+// Parsing the diamond result to get the diamonds
+let diamond_res = await result.json();
+console.log(JSON.stringify(diamond_res, null, 2));
+let { items, total_count } = diamond_res.data.diamonds_by_query;
 
-  // Logging the items and total count of diamonds
-  console.log({ items, total_count });
-  
-  // Looping over the items to access each diamond's certificate number
-  for (let i = 0; i < items.length; i++) {
-      const certNumber = items[i].diamond.certificate.certNumber;
-      const video = items[i].diamond.video;
-      const image = items[i].diamond.image;
-      console.log(`Certificate number for item ${i}: ${certNumber}\n`);
-      if (video !== null) {
-        console.log(`Video for item ${i}: ${video}\n`);
-      }
-      if (image !== null) {
-        console.log(`Image for item ${i}: ${image}\n`);
-      }
-  }
+// Logging the items and total count of diamonds
+console.log({ items, total_count });
 
-})();
+// Save the resulting JSON to a new file
+fs.writeFile('diamondsSchema.json', JSON.stringify(diamond_res, null, 2), (err) => {
+    if (err) throw err;
+    console.log('Schema saved to diamondsSchema.json');
+})})();
