@@ -4,6 +4,8 @@ import fetch from 'node-fetch'; // using node-fetch in this example
 // Importing the NIVODA_STAGING_USERNAME and NIVODA_STAGING_PASSWORD from the secrets.js file
 import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../../secrets.js';
 import fs from 'fs'
+import { LocalStorage } from 'node-localstorage';
+
 
 // You can call the GraphQL with all common request libraries such as:
 let libraries = {
@@ -20,6 +22,38 @@ const API_URL = 'http://wdc-intg-customer-staging.herokuapp.com/api/diamonds';
 // Great documentation can be found here:
 // https://graphql.org/graphql-js/graphql-clients/
 
+let localStorage = new LocalStorage('./scratch');
+// Check if a token is cached
+let token = localStorage.getItem('token');
+
+if (token) {
+  console.log('Token found:', token);
+} else {
+  console.log('No token found.');
+}
+
+let cachedToken;
+let cachedTokenTime;
+
+try {
+  cachedToken = localStorage.getItem('token');
+  cachedTokenTime = localStorage.getItem('tokenTime');
+} catch (error) {
+  console.log('No valid token found.');
+  cachedToken = null;
+  cachedTokenTime = null;
+}
+
+// Check if a token was cached in the last x amount of time
+let x = 60 * 60 * 1000; // 1 hour in milliseconds
+if (cachedToken && cachedTokenTime && new Date().getTime() - cachedTokenTime < x) {
+  // If a valid token was cached, set token to the cached value
+  token = cachedToken;
+} else {
+  // If no valid token was cached, set token to null
+  token = null;
+}
+
 // The authentication query to get the authentication token
 let authenticate_query = `{
     authenticate { 
@@ -32,18 +66,69 @@ let authenticate_query = `{
 
 // An async function that makes the HTTP requests to the API
 (async function() {
-  // Making the authentication request to get the authentication token
-  let authenticate_result = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query: authenticate_query }),
-  });
+  // Amend the authentication process to check if the token is still valid.
+  // If the token is still valid, you can use it to make the diamond request.
+  // If the token is not valid, you can make the authentication request to get a new token.
+  // Check if the token is still valid
+  let tokenIsValid = false;
 
-  // Parsing the authentication result to get the authentication token
-  let res = await authenticate_result.json();
-  let { token } = res.data.authenticate.username_and_password;
+  // Check if the token has any value
+  if (token === null) {
+    // Proceed with your code here if the token doesn't have any value
+  } else {
+    // If the token has a value, check if it's valid
+    let validateTokenQuery = `
+      query {
+        validate_token(token: "${token}")
+      }
+    `;
+    let validateTokenResult = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ query: validateTokenQuery }),
+    });
+    let validateTokenRes = await validateTokenResult.json();
+    tokenIsValid = validateTokenRes.data.validate_token;
+    console.log(tokenIsValid.data);
+  }
+  
+  // If the token is not valid, make the authentication request to get a new token
+  if (!tokenIsValid) {
+    console.log('Token is not valid. Making the authentication request to get a new token...');
+    let authenticate_result = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: authenticate_query }),
+    });
+    let res = await authenticate_result.json();
+    token = res.data.authenticate.username_and_password.token;
+    console.log('New token:', token);
+
+    if (typeof localStorage === "undefined" || localStorage === null) {
+      localStorage = new LocalStorage('./scratch');
+    }
+
+    // Cache the token value
+    localStorage.setItem('token', token);
+  }
+
+  // // Making the authentication request to get the authentication token
+  // let authenticate_result = await fetch(API_URL, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({ query: authenticate_query }),
+  // });
+
+  // // Parsing the authentication result to get the authentication token
+  // let res = await authenticate_result.json();
+  // let { token } = res.data.authenticate.username_and_password;
 
   // The diamond query to get the diamonds from the API
   let diamond_query = `
