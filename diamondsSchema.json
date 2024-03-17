@@ -188,43 +188,6 @@
           "discount": -5182
         },
         {
-          "id": "DIAMOND/2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
-          "diamond": {
-            "id": "2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
-            "video": "https://loupe360.com/diamond/US924049703D/video/500/500",
-            "image": null,
-            "availability": "AVAILABLE",
-            "supplierStockId": null,
-            "brown": null,
-            "green": null,
-            "milky": null,
-            "eyeClean": null,
-            "mine_of_origin": null,
-            "certificate": {
-              "id": "ee8b24c2-9e58-514b-908d-394dc561f87c",
-              "lab": "EGL",
-              "shape": "ROUND",
-              "certNumber": "US924049703D",
-              "cut": "GD",
-              "carats": 1.5,
-              "clarity": "I1",
-              "polish": "VG",
-              "symmetry": "GD",
-              "color": "D",
-              "width": "7.220000",
-              "length": "7.220000",
-              "depth": "4.640000",
-              "girdle": "Thin",
-              "floInt": "NON",
-              "floCol": null,
-              "depthPercentage": "64.200000",
-              "table": "55.000000"
-            }
-          },
-          "price": 448324,
-          "discount": -5080
-        },
-        {
           "id": "DIAMOND/8c6982cd-9e10-4795-93bc-b19938405167",
           "diamond": {
             "id": "8c6982cd-9e10-4795-93bc-b19938405167",
@@ -260,6 +223,43 @@
           },
           "price": 448324,
           "discount": 250
+        },
+        {
+          "id": "DIAMOND/2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
+          "diamond": {
+            "id": "2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
+            "video": "https://loupe360.com/diamond/US924049703D/video/500/500",
+            "image": null,
+            "availability": "AVAILABLE",
+            "supplierStockId": null,
+            "brown": null,
+            "green": null,
+            "milky": null,
+            "eyeClean": null,
+            "mine_of_origin": null,
+            "certificate": {
+              "id": "ee8b24c2-9e58-514b-908d-394dc561f87c",
+              "lab": "EGL",
+              "shape": "ROUND",
+              "certNumber": "US924049703D",
+              "cut": "GD",
+              "carats": 1.5,
+              "clarity": "I1",
+              "polish": "VG",
+              "symmetry": "GD",
+              "color": "D",
+              "width": "7.220000",
+              "length": "7.220000",
+              "depth": "4.640000",
+              "girdle": "Thin",
+              "floInt": "NON",
+              "floCol": null,
+              "depthPercentage": "64.200000",
+              "table": "55.000000"
+            }
+          },
+          "price": 448324,
+          "discount": -5080
         },
         {
           "id": "DIAMOND/946a21d3-b362-4abe-8d6a-9509dc7008aa",
