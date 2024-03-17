@@ -2,7 +2,9 @@
 import fetch from 'node-fetch'; // using node-fetch in this example
 
 // Importing the NIVODA_STAGING_USERNAME and NIVODA_STAGING_PASSWORD from the secrets.js file
-import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../../secrets.js';
+// import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../../secrets.js';
+const NIVODA_STAGING_USERNAME = process.env.NIVODA_STAGING_USERNAME;
+const NIVODA_STAGING_PASSWORD = process.env.NIVODA_STAGING_PASSWORD;
 import fs from 'fs'
 import { LocalStorage } from 'node-localstorage';
 
