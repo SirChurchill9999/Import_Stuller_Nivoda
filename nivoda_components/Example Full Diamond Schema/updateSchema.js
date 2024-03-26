@@ -29,6 +29,8 @@ let authenticate_query = `{
 
 
 
+
+
 // The API URL for the production environment
 // const API_URL = 'https://integrations.nivoda.net/api/diamonds';
 
