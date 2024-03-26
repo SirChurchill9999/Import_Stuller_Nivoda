@@ -17,6 +17,18 @@ let libraries = {
 // The API URL for the staging environment
 const API_URL = 'http://wdc-intg-customer-staging.herokuapp.com/api/diamonds';
 
+// The authentication query to get the authentication token
+let authenticate_query = `{
+  authenticate { 
+      username_and_password(username: "${NIVODA_STAGING_USERNAME}", password: "${NIVODA_STAGING_PASSWORD}") {
+          token
+      }
+  }
+}
+`;
+
+
+
 // The API URL for the production environment
 // const API_URL = 'https://integrations.nivoda.net/api/diamonds';
 
@@ -91,6 +103,8 @@ let authenticate_query = `{
       },
       body: JSON.stringify({ query: validateTokenQuery }),
     });
+
+  
     let validateTokenRes = await validateTokenResult.json();
     tokenIsValid = validateTokenRes.data.validate_token;
     console.log(tokenIsValid.data);
@@ -107,7 +121,7 @@ let authenticate_query = `{
       body: JSON.stringify({ query: authenticate_query }),
     });
     let res = await authenticate_result.json();
-    token = res.data.authenticate.username_and_password.token;
+    token = res.data.authenticate.username_and_password.token; /* VERY ODD WAY OF DOING IT, COMPARE TO SAMPLE */
     console.log('New token:', token);
 
     if (typeof localStorage === "undefined" || localStorage === null) {

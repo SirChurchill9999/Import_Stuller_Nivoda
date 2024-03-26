@@ -188,43 +188,6 @@
           "discount": -5182
         },
         {
-          "id": "DIAMOND/8c6982cd-9e10-4795-93bc-b19938405167",
-          "diamond": {
-            "id": "8c6982cd-9e10-4795-93bc-b19938405167",
-            "video": "https://loupe360.com/diamond/1423691939/video/500/500",
-            "image": null,
-            "availability": "AVAILABLE",
-            "supplierStockId": null,
-            "brown": "No",
-            "green": "No",
-            "milky": "No",
-            "eyeClean": null,
-            "mine_of_origin": null,
-            "certificate": {
-              "id": "945874b1-70aa-590c-9c3b-4380d92345ac",
-              "lab": "GIA",
-              "shape": "ROUND",
-              "certNumber": "1423691939",
-              "cut": "EX",
-              "carats": 1.5,
-              "clarity": "I2",
-              "polish": "EX",
-              "symmetry": "EX",
-              "color": "D",
-              "width": "7.300000",
-              "length": "7.270000",
-              "depth": "4.580000",
-              "girdle": null,
-              "floInt": "FNT",
-              "floCol": null,
-              "depthPercentage": "62.800000",
-              "table": "57.000000"
-            }
-          },
-          "price": 448324,
-          "discount": 250
-        },
-        {
           "id": "DIAMOND/2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
           "diamond": {
             "id": "2ecbc6f6-e612-4eab-8d8b-68fe0fc02c04",
@@ -260,6 +223,43 @@
           },
           "price": 448324,
           "discount": -5080
+        },
+        {
+          "id": "DIAMOND/8c6982cd-9e10-4795-93bc-b19938405167",
+          "diamond": {
+            "id": "8c6982cd-9e10-4795-93bc-b19938405167",
+            "video": "https://loupe360.com/diamond/1423691939/video/500/500",
+            "image": null,
+            "availability": "AVAILABLE",
+            "supplierStockId": null,
+            "brown": "No",
+            "green": "No",
+            "milky": "No",
+            "eyeClean": null,
+            "mine_of_origin": null,
+            "certificate": {
+              "id": "945874b1-70aa-590c-9c3b-4380d92345ac",
+              "lab": "GIA",
+              "shape": "ROUND",
+              "certNumber": "1423691939",
+              "cut": "EX",
+              "carats": 1.5,
+              "clarity": "I2",
+              "polish": "EX",
+              "symmetry": "EX",
+              "color": "D",
+              "width": "7.300000",
+              "length": "7.270000",
+              "depth": "4.580000",
+              "girdle": null,
+              "floInt": "FNT",
+              "floCol": null,
+              "depthPercentage": "62.800000",
+              "table": "57.000000"
+            }
+          },
+          "price": 448324,
+          "discount": 250
         },
         {
           "id": "DIAMOND/946a21d3-b362-4abe-8d6a-9509dc7008aa",
