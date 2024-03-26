@@ -11,13 +11,17 @@
  * 3. Update the product with diamond information
  */
 
-//require('dotenv').config();
-
 // Importing the node-fetch library to make HTTP requests
 import fetch from 'node-fetch'; // using node-fetch in this example
 
-// Importing the NIVODA_STAGING_USERNAME and NIVODA_STAGING_PASSWORD from the secrets.js file
-import { NIVODA_STAGING_USERNAME, NIVODA_STAGING_PASSWORD } from '../secrets.js';
+dotenv.config();
+const NIVODA_STAGING_USERNAME = process.env.NIVODA_STAGING_USERNAME;
+const NIVODA_STAGING_PASSWORD = process.env.NIVODA_STAGING_PASSWORD;
+// Shopify API details
+const SHOPIFY_API_ACCESS_TOKEN = process.env.SHOPIFY_API_ACCESS_TOKEN;
+const SHOP = process.env.SHOP;
+import fs from 'fs'
+import dotenv from 'dotenv';
 
 // You can call the GraphQL with all common request libraries such as:
 let libraries = {
@@ -28,19 +32,13 @@ let libraries = {
 // The API URL for the staging environment
 const API_URL = 'http://wdc-intg-customer-staging.herokuapp.com/api/diamonds';
 
-// The API URL for the production environment
-// const API_URL = 'https://integrations.nivoda.net/api/diamonds';
-
-// Great documentation can be found here:
-// https://graphql.org/graphql-js/graphql-clients/
-
 // The authentication query to get the authentication token
 let authenticate_query = `{
-    authenticate { 
-        username_and_password(username: "${NIVODA_STAGING_USERNAME}", password: "${NIVODA_STAGING_PASSWORD}") {
-            token
-        }
-    }
+  authenticate { 
+      username_and_password(username: "${NIVODA_STAGING_USERNAME}", password: "${NIVODA_STAGING_PASSWORD}") {
+          token
+      }
+  }
 }
 `;
 
@@ -58,6 +56,7 @@ let authenticate_query = `{
   // Parsing the authentication result to get the authentication token
   let res = await authenticate_result.json();
   let { token } = res.data.authenticate.username_and_password;
+  // console.log('Token:', token);
 
   // The diamond query to get the diamonds from the API
   let diamond_query = `
@@ -69,10 +68,10 @@ let authenticate_query = `{
           sizes: [{ from: 1.5, to: 2.5}],
           has_v360: true,
           has_image: true,
-          color: [J,K]
+          color: [D]
         },
         offset: 0,
-        limit: 50, 
+        limit: 10, 
         order: { type: price, direction: ASC }
       ) {
         items {
@@ -118,7 +117,7 @@ let authenticate_query = `{
   `;
 
   // Making the diamond request to get the diamonds from the API
-  let queryResult = await fetch(API_URL, {
+  let result = await fetch(API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -128,8 +127,15 @@ let authenticate_query = `{
   });
 
   // Parsing the diamond result to get the diamonds
-  let diamondResult = await queryResult.json();
-  let { items, total_count } = diamondResult.data.diamonds_by_query;
+  let diamond_res = await result.json();
+  console.log(JSON.stringify(diamond_res, null, 2));
+  let { items, total_count } = diamond_res.data.diamonds_by_query;
+
+    // Save the resulting JSON to a new file
+  fs.writeFile('diamondsSchema.json', JSON.stringify(diamond_res, null, 2), (err) => {
+    if (err) throw err;
+    console.log('Schema saved to diamondsSchema.json');
+  });  
 
   // Logging the items and total count of diamonds
   console.log({ items, total_count });
